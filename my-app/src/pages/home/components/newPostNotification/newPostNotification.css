@@ -1,0 +1,16 @@
+.newPostNotification {
+  position: absolute;
+  font-size: 0.8rem;
+  margin: 1rem 0 0 30%;
+  font-weight: 600;
+  color: #0a66c2;
+  background-color: #edf3f8;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  display: block;
+  z-index: 999;
+}
+
+.displayNone {
+  display: none;
+}
