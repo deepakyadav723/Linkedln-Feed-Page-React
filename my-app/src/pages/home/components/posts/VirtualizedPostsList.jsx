@@ -15,14 +15,23 @@ import {
   removeNewPostNotification,
   showNewPostNotification,
 } from "../../../../store/homeSlice.js";
-import { useWindowListener } from "../../helper/home.general.js";
+import { useWindowListener } from "../../../../hooks/hooks.general.js";
+import postsSelector from "../../../../reducers/posts.selector.js";
+import homeSelector from "../../../../reducers/home.selector.js";
 
 const OVER_SCANED = 3;
 
 const VirtualizedPostsList = ({ windowHeight, scrollTop }) => {
-  const { allPosts, currentPosts } = useSelector((state) => state.posts);
-  const { filterApplied, sortApplied, newPostNotification, searchApplied } =
-    useSelector((state) => state.home);
+  const postsState = useSelector((state) => state.posts);
+  const allPosts = postsSelector.allPosts(postsState);
+  const currentPosts = postsSelector.currentPosts(postsState);
+
+  const homeState = useSelector((state) => state.home);
+  const filterApplied = homeSelector.filterApplied(homeState);
+  const newPostNotification = homeSelector.newPostNotification(homeState);
+  const sortApplied = homeSelector.sortApplied(homeState);
+  const searchApplied = homeSelector.searchApplied(homeState);
+
   const dispatch = useDispatch();
 
   const timeoutId = useRef(null);

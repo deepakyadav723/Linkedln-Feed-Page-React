@@ -1,28 +1,32 @@
 import React from "react";
 
-import userBackgroundImg from "../../assets/background.png";
-import profilePic from "../../assets/profile-pic.png";
+import { user } from "../../../../data";
+import userReader from "../../readers/user.reader";
 
 import "./user.css";
 
 const User = () => {
+  const name = userReader.name(user) ?? "Username";
+  const profilePic = userReader.profilePic(user) ?? "Profile Pic";
+  const highlights = userReader.highlights(user) ?? "User Highlights";
+  const location = userReader.location(user) ?? "User Location";
+  const backgroundImage =
+    userReader.backgroundImage(user) ?? "User Background Image";
+
   return (
     <div className="currentLogInUser">
       <div className="userBackgroundImgDiv">
         <img
           id="userBackgroundImg"
-          src={userBackgroundImg}
+          src={backgroundImage}
           alt="User-Background-Image"
         />
       </div>
       <div className="userInfo">
         <img id="userImg" src={profilePic} alt="User-Profile-Picture" />
-        <h4 id="userName">Deepak Yadav</h4>
-        <p id="userHighlights">
-          ASE Intern @Tekion || NITRR CSE'25 || Guardian (Leetcode: 2148) ||
-          Specialist (Codeforces- Rating: 1426)
-        </p>
-        <span id="userLocation">Firozabad, Uttar Pradesh</span>
+        <h4 id="userName">{name}</h4>
+        <p id="userHighlights">{highlights}</p>
+        <span id="userLocation">{location}</span>
       </div>
     </div>
   );

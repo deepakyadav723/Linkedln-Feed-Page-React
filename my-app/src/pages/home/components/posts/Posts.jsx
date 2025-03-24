@@ -7,6 +7,8 @@ import VirtualizedPostsList from "./VirtualizedPostsList";
 
 import "./posts.css";
 
+const WINDOW_HEIGHT = 578;
+
 const Posts = () => {
   const [scrollTop, setScrollTop] = useState(0);
 
@@ -20,7 +22,10 @@ const Posts = () => {
 
       {/* Virtualization using scroll event */}
       <div className="posts" onScroll={handleScroll}>
-        <VirtualizedPostsList scrollTop={scrollTop} windowHeight={578} />
+        <VirtualizedPostsList
+          scrollTop={scrollTop}
+          windowHeight={WINDOW_HEIGHT}
+        />
       </div>
 
       {/* Virtualization using intersaction observer */}

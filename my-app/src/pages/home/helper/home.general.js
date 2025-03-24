@@ -1,40 +1,33 @@
-import { useEffect } from "react";
 import _filter from "lodash/filter";
+import _orderBy from "lodash/orderBy";
+import _sampleSize from "lodash/sampleSize";
+import { images } from "../../../data";
 
-export function useWindowListener(event, callback) {
-  useEffect(() => {
-    window.addEventListener(event, callback);
-    return () => window.removeEventListener(event, callback);
-  }, [event, callback]);
-}
+const parsePostDate = (dateStr) => {
+  const [day, month, year] = dateStr.split("/").map(Number);
+  return new Date(year, month - 1, day);
+};
 
-export function getSortedPosts(sortOrder, posts) {
-  const sortedPosts = [...posts];
-  return sortedPosts.sort((post1, post2) => {
-    const dateString1 = post1.date;
-    const [day1, month1, year1] = dateString1.split("/").map(Number);
-    const date1 = new Date(year1, month1 - 1, day1);
+const parseInputDate = (dateStr) => {
+  const [year, month, day] = dateStr.split("-").map(Number);
+  return new Date(year, month - 1, day);
+};
 
-    const dateString2 = post2.date;
-    const [day2, month2, year2] = dateString2.split("/").map(Number);
-    const date2 = new Date(year2, month2 - 1, day2);
+export const getSortedPosts = (sortOrder, posts) => {
+  return _orderBy([...posts], (post) => parsePostDate(post.date), [sortOrder]);
+};
 
-    return sortOrder === "ASC" ? date1 - date2 : date2 - date1;
+export const getFilteredPosts = (startDate, endDate, posts) => {
+  return _filter(posts, (post) => {
+    const postDate = parsePostDate(post.date);
+    const StartDate = parseInputDate(startDate);
+    const EndDate = parseInputDate(endDate);
+    return postDate >= StartDate && postDate <= EndDate;
   });
-}
+};
 
-export function getFilteredPosts(startDate, endDate, posts) {
-  return _filter(posts, (item) => {
-    const itemDateString = item.date;
-    const [day1, month1, year1] = itemDateString.split("/").map(Number);
-    const itemDate = new Date(year1, month1 - 1, day1);
+export const generateRandomKey = () => {
+  return Math.random() * 10 + new Date().toLocaleDateString();
+};
 
-    const [year2, month2, day2] = startDate.split("-").map(Number);
-    const StartDate = new Date(year2, month2 - 1, day2);
-
-    const [year3, month3, day3] = endDate.split("-").map(Number);
-    const EndDate = new Date(year3, month3 - 1, day3);
-
-    return itemDate >= StartDate && itemDate <= EndDate;
-  });
-}
+export const getRandomImages = () => _sampleSize(images, 2);

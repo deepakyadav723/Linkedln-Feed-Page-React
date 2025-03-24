@@ -1,40 +1,41 @@
 import React, { memo, useCallback, useRef } from "react";
-import cx from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
 import { updateAllPosts } from "../../../../store/postsSlice";
 import downArrowIcon from "../../assets/down-arrow.png";
-import profilePic from "../../assets/profile-pic.png";
-import xMarkIcon from "../../assets/x-mark.png";
+import crossIcon from "../../assets/x-mark.png";
 import selectPhotoIcon from "../../assets/photo.png";
 import calenderIcon from "../../assets/calendar.png";
 import plusIcon from "../../assets/plus.png";
 import sparklingIcon from "../../assets/sparkling.png";
+import { user } from "../../../../data";
+import { getRandomImages } from "../../helper/home.general";
+import postsSelector from "../../../../reducers/posts.selector";
 
 import "./newPost.css";
 
-const NewPost = ({ showNewPost, setShowNewPost, handleCrossIcon }) => {
+const NewPost = ({ setShowNewPost, handleCrossIcon }) => {
   const descRef = useRef(null);
-  const { allPosts } = useSelector((state) => state.posts);
+  // const { allPosts } = useSelector((state) => state.posts);
+  const postsState = useSelector((state) => state.posts);
+  const allPosts = postsSelector.allPosts(postsState);
   const dispatch = useDispatch();
 
+  const { name, highlights, profilePic } = user;
+
   const handleSubmit = useCallback(
-    function handleSubmit(event) {
+    (event) => {
       event.preventDefault();
       const desc = descRef.current.value;
       const newPost = [
         {
-          name: "Deepak Yadav",
+          name: name,
           profilePic: profilePic,
-          highlights:
-            "ASE Intern @Tekion || NITRR CSE'25 || Guardian (Leetcode: 2148) || Specialist (Codeforces- Rating: 1426)",
+          highlights: highlights,
           date: new Date().toLocaleDateString(),
           description: desc,
-          images: [
-            "https://images.unsplash.com/photo-1518770660439-4636190af475",
-            "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-          ],
+          images: getRandomImages(),
           likes: 0,
           comments: 0,
         },
@@ -43,12 +44,12 @@ const NewPost = ({ showNewPost, setShowNewPost, handleCrossIcon }) => {
       setShowNewPost(false);
       descRef.current.value = "";
     },
-    [allPosts, dispatch, setShowNewPost]
+    [allPosts, dispatch, highlights, name, profilePic, setShowNewPost]
   );
 
-  return (
-    <div className={cx("newPostSection", { displayNone: !showNewPost })}>
-      <form id="newPost" className="newPost" onSubmit={handleSubmit}>
+  const NewPostHeader = () => {
+    return (
+      <>
         <div className="newPostHeader">
           <div className="newPostHeaderLeft">
             <img
@@ -69,17 +70,24 @@ const NewPost = ({ showNewPost, setShowNewPost, handleCrossIcon }) => {
             </div>
           </div>
           <button
-            style={{ border: "none", background: "none" }}
+            className="closeFormButton"
             type="reset"
             onClick={handleCrossIcon}
           >
             <img
               className="createNewPostCrossIcon"
-              src={xMarkIcon}
+              src={crossIcon}
               alt="Cross Icon"
             />
           </button>
         </div>
+      </>
+    );
+  };
+
+  const NewPostInputSection = () => {
+    return (
+      <>
         <div className="newPostMiddleSection">
           <textarea
             ref={descRef}
@@ -98,12 +106,29 @@ const NewPost = ({ showNewPost, setShowNewPost, handleCrossIcon }) => {
           </div>
         </div>
         <hr />
+      </>
+    );
+  };
+
+  const NewPostFooter = () => {
+    return (
+      <>
         <div className="newPostFooter">
-          <button type="reset" style={{ marginRight: ".5rem" }}>
+          <button type="reset" className="formResetButton">
             Reset
           </button>
-          <button style={{ color: "#0a66c2" }}>Post</button>
+          <button className="formSubmitButton">Post</button>
         </div>
+      </>
+    );
+  };
+
+  return (
+    <div className="newPostSection">
+      <form id="newPost" className="newPost" onSubmit={handleSubmit}>
+        <NewPostHeader />
+        <NewPostInputSection />
+        <NewPostFooter />
       </form>
     </div>
   );

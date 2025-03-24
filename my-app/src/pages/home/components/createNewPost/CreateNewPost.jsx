@@ -8,13 +8,9 @@ import "./createNewPost.css";
 const CreateNewPost = () => {
   const [showNewPost, setShowNewPost] = useState(false);
 
-  function handleCrossIcon() {
-    setShowNewPost(false);
-  }
-
-  function handleClick() {
-    setShowNewPost(true);
-  }
+  const handleClick = (showNewPost) => {
+    setShowNewPost(showNewPost);
+  };
 
   return (
     <>
@@ -24,15 +20,16 @@ const CreateNewPost = () => {
           src={ProfilePic}
           alt="User-Profile-Picture"
         />
-        <button className="createPostButton" onClick={handleClick}>
+        <button className="createPostButton" onClick={() => handleClick(true)}>
           Start a post, try writing with AI
         </button>
       </div>
-      <NewPost
-        showNewPost={showNewPost}
-        setShowNewPost={setShowNewPost}
-        handleCrossIcon={handleCrossIcon}
-      />
+      {showNewPost && (
+        <NewPost
+          setShowNewPost={setShowNewPost}
+          handleCrossIcon={() => handleClick(false)}
+        />
+      )}
     </>
   );
 };

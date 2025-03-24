@@ -29,11 +29,11 @@ export const headerComponentInfo = [
 export const sortOptions = [
   {
     label: "Oldest",
-    value: "ASC",
+    value: "asc",
   },
   {
     label: "Latest",
-    value: "DESC",
+    value: "desc",
   },
 ];
 
@@ -1392,4 +1392,24 @@ export const posts2 = [
     likes: 420,
     comments: 62,
   },
+];
+
+export const user = {
+  name: "Deepak Yadav",
+  profilePic: require("../src/assets/profile-pic.png"),
+  backgroundImage: require("../src/pages/home/assets/background.png"),
+  highlights:
+    "ASE Intern @Tekion || NITRR CSE'25 || Guardian (Leetcode: 2148) || Specialist (Codeforces- Rating: 1426)",
+  location: "Firozabad, Uttar Pradesh",
+  profileViewers: 45,
+  postImpression: 72,
+};
+
+export const images = [
+  "https://images.unsplash.com/photo-1518770660439-4636190af475",
+  "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+  "https://images.unsplash.com/photo-1504384308090-c894fdcc538d",
+  "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+  "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
+  "https://images.unsplash.com/photo-1497032205916-ac775f0649ae",
 ];

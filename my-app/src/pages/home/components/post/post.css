@@ -55,6 +55,15 @@
   height: 30rem;
 }
 
+.imgLoadingState {
+  color: white;
+  font-size: 1rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .postImages::-webkit-scrollbar {
   display: none;
 }
@@ -133,4 +142,8 @@
   width: 1rem;
   height: 1rem;
   margin: 0 4px -2px 0;
+}
+
+.displayNone {
+  display: none;
 }

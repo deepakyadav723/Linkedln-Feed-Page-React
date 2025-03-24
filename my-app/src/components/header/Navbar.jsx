@@ -1,12 +1,12 @@
 import React from "react";
 import _map from "lodash/map";
+import { NavLink } from "react-router-dom";
 
 import { headerComponentInfo } from "../../data";
 import profilePic from "../../assets/profile-pic.png";
 import downArrow from "../../assets/down-arrow.png";
-import { NavLink } from "react-router-dom";
 
-const NavbarComponent = () => {
+const Navbar = () => {
   return (
     <>
       {_map(headerComponentInfo, (item) => (
@@ -35,4 +35,4 @@ const NavbarComponent = () => {
   );
 };
 
-export default NavbarComponent;
+export default Navbar;

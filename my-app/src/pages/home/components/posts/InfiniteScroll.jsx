@@ -8,15 +8,27 @@ import {
   removeNewPostNotification,
   showNewPostNotification,
 } from "../../../../store/homeSlice";
+import postsSelector from "../../../../reducers/posts.selector";
+import homeSelector from "../../../../reducers/home.selector";
 // import { PostsContext } from "../../store/postsContext/Context";
 // import { HomeContext } from "../../store/homeContext/Context";
 // import { SearchContext } from "../../store/searchContext/Context";
 
 const InfiniteScroll = () => {
-  const { allPosts, currentPosts } = useSelector((state) => state.posts);
+  // const { allPosts, currentPosts } = useSelector((state) => state.posts);
 
-  const { filterApplied, sortApplied, newPostNotification, searchApplied } =
-    useSelector((state) => state.home);
+  const postsState = useSelector((state) => state.posts);
+  const allPosts = postsSelector.allPosts(postsState);
+  const currentPosts = postsSelector.currentPosts(postsState);
+
+  // const { filterApplied, sortApplied, newPostNotification, searchApplied } =
+  //   useSelector((state) => state.home);
+
+  const homeState = useSelector((state) => state.home);
+  const filterApplied = homeSelector.filterApplied(homeState);
+  const sortApplied = homeSelector.sortApplied(homeState);
+  const newPostNotification = homeSelector.newPostNotification(homeState);
+  const searchApplied = homeSelector.searchApplied(homeState);
 
   // const { searchApplied } = useContext(SearchContext);
   const dispatch = useDispatch();

@@ -3,10 +3,16 @@ import { useSelector } from "react-redux";
 import _slice from "lodash/slice";
 import _map from "lodash/map";
 import Post from "../post/Post";
+import postsSelector from "../../../../reducers/posts.selector";
 
 const BATCH_SIZE = 10;
+
 const Posts = () => {
-  const { currentPosts } = useSelector((state) => state.posts);
+  // const { currentPosts } = useSelector((state) => state.posts);
+
+  const postsState = useSelector((state) => state.posts);
+  const currentPosts = postsSelector.currentPosts(postsState);
+
   const [startIndex, setStartIndex] = useState(0);
 
   const topRef = useRef(null);
